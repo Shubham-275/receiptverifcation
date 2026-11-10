@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#F4F1E9">
+  <title>Receipt Intelligence — Purchasing Ledger</title>
+  <meta name="description" content="A verified purchasing ledger for independent retailers. Scan supplier invoices, track product costs, and ask questions of your purchase history.">
+  <link rel="preload" href="/static/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/fonts/instrument-serif-latin-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css?v=20261110g">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <svg class="icon-sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m20 20-4.2-4.2" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 6.7M20 4v6h-6" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 20h16" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6zM14 2v5h5" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v5M12 16h.01" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h9" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  </svg>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       ACCESS / LOGIN
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="auth" id="auth-screen">
+    <section class="auth__mast" aria-label="Receipt Intelligence">
+      <div class="auth__brand">
+        <span class="brand__mark" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+        <span class="brand__type">
+          <span class="brand__name">Receipt <em>Intelligence</em></span>
+          <span class="brand__sub">Purchasing ledger</span>
+        </span>
+      </div>
+
+      <div class="auth__stage">
+        <p class="eyebrow">
+          <span class="eyebrow__mark" aria-hidden="true"></span>
+          Private workspace
+          <span class="eyebrow__sep" aria-hidden="true"></span>
+          Owner access
+        </p>
+        <h1 class="auth__display">Every invoice,<br><em>under lock<span class="accent">.</span></em></h1>
+        <p class="auth__lede">A verified purchasing record, kept behind a signed session.</p>
+      </div>
+
+      <figure class="auth__figure">
+        <svg class="auth__doodle" viewBox="0 0 520 250" role="img" aria-labelledby="doodle-title">
+          <title id="doodle-title">A shopkeeper examining an excessively long supplier receipt with a magnifying glass, while a cat watches.</title>
+
+          <path class="line faint" d="M18 231 C 96 226, 178 233, 262 229 S 438 226, 502 231"/>
+
+          <path class="line" d="M50 170 H 340 M50 170 V 231 M340 170 V 231"/>
+          <path class="line faint" d="M92 170 V 231 M134 170 V 231 M176 170 V 231 M218 170 V 231 M260 170 V 231 M302 170 V 231"/>
+          <path class="line faint" d="M50 188 H 340"/>
+
+          <path class="line" d="M262 138 H 328 V 170 H 262 Z M268 138 V 130 H 322 V 138"/>
+          <path class="line faint" d="M270 151 H 320 M274 160 H 282 M290 160 H 298 M306 160 H 314"/>
+
+          <path class="line" d="M66 140 H 96 V 170 H 66 Z M66 147 H 96 M72 134 H 90 V 140 H 72 Z"/>
+          <path class="line faint" d="M74 154 H 88 M74 161 H 88"/>
+
+          <path class="line" d="M112 158 L150 154 L154 168 L116 172 Z M116 172 L118 178 L156 174 L154 168 M120 162 L146 159 M122 166 L144 163"/>
+
+          <circle class="line" cx="206" cy="84" r="27"/>
+          <path class="line" d="M180 88 C 172 78, 176 60, 190 55 C 201 51, 215 52, 224 59 C 233 66, 235 78, 231 90"/>
+          <circle class="line accent" cx="238" cy="60" r="10"/>
+          <path class="line" d="M229 54 C 233 52, 238 51, 243 53"/>
+          <path class="line faint" d="M179 84 C 175 82, 174 89, 179 92 M233 84 C 237 82, 238 89, 233 92"/>
+
+          <circle class="line accent" cx="195" cy="84" r="8"/>
+          <circle class="line accent" cx="217" cy="84" r="8"/>
+          <path class="line accent" d="M203 84 H 209 M187 82 L 181 78 M225 82 L 231 78"/>
+          <circle class="dot" cx="195" cy="84" r="1.4"/>
+          <circle class="dot" cx="217" cy="84" r="1.4"/>
+          <path class="line" d="M206 88 C 204 93, 205 96, 209 96 M197 102 C 202 107, 211 107, 216 101"/>
+
+          <path class="line" d="M199 110 V 118 M213 110 V 118 M199 118 L206 124 L213 118"/>
+          <path class="line" d="M199 119 C 182 121, 170 134, 165 152 M213 119 C 230 121, 242 134, 247 152"/>
+          <path class="line" d="M188 130 H 224 V 170 M188 130 L183 121 M224 130 L229 121"/>
+          <path class="line faint" d="M198 147 H 214 V 160 H 198 Z"/>
+
+          <path class="line" d="M168 133 C 154 136, 144 144, 134 153"/>
+          <circle class="line" cx="110" cy="128" r="18"/>
+          <path class="line" d="M121 142 L 130 150"/>
+          <path class="line faint" d="M106 124 C 110 121, 116 121, 119 125 M104 132 H 116"/>
+
+          <path class="line" d="M244 134 C 258 133, 270 129, 282 125"/>
+          <circle class="line" cx="287" cy="123" r="4"/>
+          <path class="line" d="M291 120 C 297 111, 311 111, 317 120 C 321 126, 315 133, 308 132 L 302 130 C 296 128, 292 126, 291 120 Z"/>
+
+          <path class="line paper-fill" d="M302 130 C 294 152, 310 166, 301 186 C 294 202, 306 216, 298 238"/>
+          <path class="line paper-fill" d="M318 130 C 328 150, 313 168, 323 188 C 330 204, 318 218, 326 238"/>
+          <path class="line" d="M298 238 L303 230 L308 238 L313 230 L318 238 L323 230 L326 238"/>
+          <path class="line faint" d="M304 148 H 320 M301 160 H 319 M305 174 H 321 M301 188 H 322 M306 202 H 324 M302 216 H 324 M307 228 H 323"/>
+          <path class="line faint" d="M306 152 H 314 M308 222 H 320"/>
+          <path class="line" d="M308 210 V 217 M311 210 V 217 M314 210 V 217 M317 210 V 217"/>
+
+          <path class="line" d="M402 231 C 394 220, 398 205, 410 201 C 422 197, 432 208, 431 220 C 430 226, 426 231, 422 231"/>
+          <path class="line" d="M400 205 C 396 194, 402 188, 410 189 C 418 190, 422 197, 419 205"/>
+          <path class="line" d="M403 193 L 400 184 L 408 189 M416 189 L 423 183 L 422 193"/>
+          <circle class="dot" cx="407" cy="196" r="1.2"/>
+          <circle class="dot" cx="416" cy="196" r="1.2"/>
+          <path class="line faint" d="M407 201 L 405 204 M412 201 L 414 204 M400 199 L 394 197 M400 203 L 394 204 M420 199 L 426 197 M420 203 L 426 204"/>
+          <path class="line" d="M401 226 C 386 225, 384 213, 395 211"/>
+
+          <path class="line accent faint" d="M340 96 L 350 96 M345 91 L 345 101"/>
+          <path class="line accent faint" d="M60 110 L 68 110 M64 106 L 64 114"/>
+        </svg>
+        <figcaption class="auth__caption">
+          <span>Fig. 01</span>
+          <span>The keeper of the receipts</span>
+        </figcaption>
+      </figure>
+
+      <footer class="auth__foot">
+        <span>Meera Stores · Bengaluru, IN</span>
+        <span>v0.1.0</span>
+      </footer>
+    </section>
+
+    <section class="auth__panel" aria-labelledby="auth-title">
+      <div class="auth__panel-inner">
+        <div class="auth__panel-head">
+          <p class="micro" id="auth-mode-label">Access / Sign in</p>
+          <p class="micro">Ledger / 2026</p>
+        </div>
+
+        <div class="auth__intro">
+          <h2 class="auth__title" id="auth-title">Welcome <em>back<span class="accent">.</span></em></h2>
+          <p class="auth__copy" id="auth-copy">Sign in to open the purchasing ledger for Meera Stores.</p>
+        </div>
+
+        <form class="auth-form" id="auth-form" novalidate>
+          <div class="auth-field">
+            <label class="micro" for="auth-username">Username</label>
+            <input class="auth-input" id="auth-username" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="64" required>
+          </div>
+
+          <div class="auth-field">
+            <div class="auth-field__head">
+              <label class="micro" for="auth-password">Password</label>
+              <button type="button" class="auth-reveal" id="auth-reveal" aria-pressed="false">Show</button>
+            </div>
+            <input class="auth-input" id="auth-password" name="password" type="password" autocomplete="current-password" maxlength="128" required>
+          </div>
+
+          <div class="auth-field" id="auth-confirm-field" hidden>
+            <label class="micro" for="auth-confirm">Confirm password</label>
+            <input class="auth-input" id="auth-confirm" name="confirm" type="password" autocomplete="new-password" maxlength="128">
+          </div>
+
+          <p class="auth-error" id="auth-error" role="alert" hidden></p>
+
+          <button class="btn btn--primary auth-submit" id="auth-submit" type="submit">
+            <span id="auth-submit-label">Enter ledger</span>
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg>
+          </button>
+        </form>
+
+        <p class="auth-note" id="auth-note">One owner account · Sessions expire after 12 hours.</p>
+
+        <div class="auth-connection">
+          <span class="status-dot" id="auth-db-dot" aria-hidden="true"></span>
+          <span id="auth-db-label">Checking ledger connection</span>
+          <button type="button" class="text-button auth-retry" id="auth-retry" hidden>Retry</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="app" id="app-shell" hidden>
+    <aside class="sidebar" id="sidebar" aria-label="Workspace">
+      <a class="brand" href="#overview" data-route-link="overview">
+        <span class="brand__mark" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+        <span class="brand__type">
+          <span class="brand__name">Receipt <em>Intelligence</em></span>
+          <span class="brand__sub">Purchasing ledger</span>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <p class="nav__label">Workspace</p>
+        <a class="nav__link" href="#overview" data-route-link="overview">
+          <span class="nav__num">01</span>
+          <span class="nav__text">Overview</span>
+          <span class="nav__count" aria-hidden="true"></span>
+        </a>
+        <a class="nav__link" href="#analytics" data-route-link="analytics">
+          <span class="nav__num">02</span>
+          <span class="nav__text">Analytics</span>
+          <span class="nav__count" aria-hidden="true"></span>
+        </a>
+        <a class="nav__link" href="#inventory" data-route-link="inventory">
+          <span class="nav__num">03</span>
+          <span class="nav__text">Inventory</span>
+          <span class="nav__count" id="nav-count-inventory" aria-hidden="true">—</span>
+        </a>
+        <a class="nav__link" href="#receipts" data-route-link="receipts">
+          <span class="nav__num">04</span>
+          <span class="nav__text">Receipts</span>
+          <span class="nav__count" id="nav-count-receipts" aria-hidden="true">—</span>
+        </a>
+        <a class="nav__link" href="#intelligence" data-route-link="intelligence">
+          <span class="nav__num">05</span>
+          <span class="nav__text">Intelligence</span>
+          <span class="nav__count" aria-hidden="true"></span>
+        </a>
+      </nav>
+
+      <div class="sidebar__spacer"></div>
+
+      <section class="store-card" aria-label="Current store">
+        <p class="micro">Store</p>
+        <p class="store-card__name">Meera Stores</p>
+        <p class="store-card__meta">General &amp; grocery<br>Bengaluru, IN</p>
+      </section>
+
+      <div class="sync-row">
+        <span class="status-dot" id="status-dot" aria-hidden="true"></span>
+        <div class="sync-row__copy">
+          <span class="sync-row__label" id="sync-label">Connecting</span>
+          <span class="sync-row__time" id="sync-time">—</span>
+        </div>
+        <button type="button" class="icon-btn" id="refresh-btn" aria-label="Refresh all data" title="Refresh all data">
+          <svg class="icon" aria-hidden="true"><use href="#i-refresh"></use></svg>
+        </button>
+      </div>
+
+      <footer class="sidebar__footer">
+        <span class="sidebar__account" id="sidebar-user" title="Signed-in account">Local workspace</span>
+        <form class="sidebar__signout" method="post" action="/api/v1/auth/logout">
+          <button type="submit" class="footer-signout" id="sidebar-logout">Sign out</button>
+        </form>
+      </footer>
+    </aside>
+
+    <div class="nav-scrim" id="nav-scrim" hidden></div>
+
+    <div class="workspace">
+      <header class="topbar">
+        <div class="topbar__left">
+          <button type="button" class="icon-btn nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="sidebar">
+            <svg class="icon" aria-hidden="true"><use href="#i-menu"></use></svg>
+          </button>
+          <div class="breadcrumb" aria-label="Breadcrumb">
+            <span>Workspace</span>
+            <span class="breadcrumb__sep">/</span>
+            <strong id="current-view-label">Overview</strong>
+          </div>
+        </div>
+
+        <div class="topbar__right">
+          <p class="topbar__sync" id="topbar-sync">Syncing ledger</p>
+          <button type="button" class="btn btn--primary" id="btn-scan">
+            <svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg>
+            <span>Scan receipt</span>
+          </button>
+          <div class="user">
+            <button type="button" class="avatar" id="user-btn" aria-haspopup="menu" aria-expanded="false" aria-controls="user-menu" title="Account">
+              <span id="user-initials">MS</span>
+            </button>
+            <div class="user-menu" id="user-menu" role="menu" hidden>
+              <p class="micro">Signed in</p>
+              <p class="user-menu__name" id="user-name">—</p>
+              <p class="user-menu__meta" id="user-meta">Owner account</p>
+              <div class="user-menu__rule" aria-hidden="true"></div>
+              <form class="user-menu__form" method="post" action="/api/v1/auth/logout">
+                <button type="submit" class="user-menu__item" id="logout-btn" role="menuitem">
+                  <span>Sign out</span>
+                  <svg class="icon icon--xs" aria-hidden="true"><use href="#i-logout"></use></svg>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main id="main" tabindex="-1">
+        <div class="notice" id="offline-banner" hidden>
+          <svg class="icon notice__icon" aria-hidden="true"><use href="#i-alert"></use></svg>
+          <p><strong>PostgreSQL is offline.</strong> Saved analytics and the receipt ledger are unavailable. You can still verify a document in preview mode.</p>
+          <button type="button" class="btn btn--ghost" id="offline-retry">Retry connection</button>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             OVERVIEW
+             ═══════════════════════════════════════════════════════════════════ -->
+        <section class="view" data-view="overview" aria-labelledby="overview-title">
+          <header class="view-head">
+            <div class="view-head__main">
+              <p class="eyebrow">
+                <span class="eyebrow__mark" aria-hidden="true"></span>
+                Purchasing overview
+                <span class="eyebrow__sep" aria-hidden="true"></span>
+                <span id="overview-window">Loading period</span>
+              </p>
+              <h1 class="display" id="overview-title">Every invoice,<br><em>accounted for<span class="accent">.</span></em></h1>
+              <p class="lede">A verified record of supplier invoices, product costs and purchasing trends for Meera Stores.</p>
+            </div>
+            <dl class="view-head__meta">
+              <div>
+                <dt>Data window</dt>
+                <dd id="meta-window">—</dd>
+              </div>
+              <div>
+                <dt>Last refresh</dt>
+                <dd id="meta-updated">—</dd>
+              </div>
+            </dl>
+          </header>
+
+          <section class="hero-metrics" aria-label="Key purchasing metrics">
+            <div class="hero-metric">
+              <p class="micro">Total verified spend</p>
+              <p class="hero-metric__value">
+                <span class="hero-metric__currency">₹</span><span id="total-spend-value">0</span>
+              </p>
+              <p class="hero-metric__foot" id="total-spend-foot">Across 0 verified invoices</p>
+            </div>
+            <div class="kpi-grid">
+              <article class="kpi">
+                <p class="micro" id="kpi-month-label">Last month</p>
+                <p class="kpi__value" id="kpi-month-value">—</p>
+                <p class="kpi__foot" id="kpi-month-foot">—</p>
+              </article>
+              <article class="kpi">
+                <p class="micro">Invoices</p>
+                <p class="kpi__value" id="kpi-receipts">—</p>
+                <p class="kpi__foot" id="kpi-receipts-foot">—</p>
+              </article>
+              <article class="kpi">
+                <p class="micro">Products</p>
+                <p class="kpi__value" id="kpi-products">—</p>
+                <p class="kpi__foot" id="kpi-products-foot">—</p>
+              </article>
+              <article class="kpi">
+                <p class="micro">Suppliers</p>
+                <p class="kpi__value" id="kpi-suppliers">—</p>
+                <p class="kpi__foot" id="kpi-suppliers-foot">—</p>
+              </article>
+            </div>
+          </section>
+
+          <div class="grid grid--7-5">
+            <section class="panel panel--chart" aria-labelledby="spend-chart-title">
+              <header class="panel__head">
+                <div>
+                  <p class="micro">Cash flow</p>
+                  <h2 class="panel__title" id="spend-chart-title">Purchasing by month</h2>
+                </div>
+                <div class="panel__stat">
+                  <span class="micro">Nine-month total</span>
+                  <strong id="chart-total">—</strong>
+                </div>
+              </header>
+              <div class="bar-chart" id="spend-chart" role="group" aria-label="Monthly purchasing spend"></div>
+              <footer class="panel__foot">
+                <span id="chart-foot">Daily ledger totals, grouped by month</span>
+                <a class="text-link panel__link" href="#analytics">Full analysis <svg class="icon icon--xs" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+              </footer>
+            </section>
+
+            <section class="panel panel--recent" aria-labelledby="recent-title">
+              <header class="panel__head">
+                <div>
+                  <p class="micro">Activity</p>
+                  <h2 class="panel__title" id="recent-title">Latest invoices</h2>
+                </div>
+                <a class="text-link" href="#receipts">Full ledger <svg class="icon icon--xs" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+              </header>
+              <div class="invoice-list" id="recent-receipts">
+                <p class="empty-copy">Loading invoices…</p>
+              </div>
+              <footer class="panel__foot">
+                <span>Last five documents filed</span>
+                <span class="micro micro--right">Verified</span>
+              </footer>
+            </section>
+          </div>
+
+          <div class="grid grid--8-4">
+            <section class="panel panel--inventory" aria-labelledby="inventory-preview-title">
+              <header class="panel__head">
+                <div>
+                  <p class="micro">Catalogue</p>
+                  <h2 class="panel__title" id="inventory-preview-title">Inventory overview</h2>
+                </div>
+                <a class="text-link" href="#inventory">All products <svg class="icon icon--xs" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+              </header>
+              <div class="table-wrap">
+                <table class="data-table data-table--compact">
+                  <thead>
+                    <tr>
+                      <th scope="col">Product</th>
+                      <th scope="col">Category</th>
+                      <th scope="col" class="num">Volume</th>
+                      <th scope="col" class="num">Avg cost</th>
+                      <th scope="col" class="num">Spend</th>
+                      <th scope="col" class="num">Last bought</th>
+                    </tr>
+                  </thead>
+                  <tbody id="overview-inventory-body">
+                    <tr><td colspan="6"><p class="empty-copy">Loading catalogue…</p></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <footer class="panel__foot">
+                <span>Ranked by recorded spend</span>
+                <span class="micro micro--right" id="overview-product-count">—</span>
+              </footer>
+            </section>
+
+            <aside class="ask-panel" aria-labelledby="ask-panel-title">
+              <p class="micro micro--light">Ask the ledger</p>
+              <h2 class="ask-panel__title" id="ask-panel-title">A question, answered from your receipts<span class="accent-light">.</span></h2>
+              <form class="ask-panel__form" id="quick-ask-form">
+                <label class="sr-only" for="quick-ask-input">Ask about your purchases</label>
+                <input type="text" id="quick-ask-input" placeholder="What did I pay for rice last month?" autocomplete="off">
+                <button type="submit" aria-label="Ask the ledger">
+                  <svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg>
+                </button>
+              </form>
+              <div class="ask-panel__examples">
+                <button type="button" class="ask-example" data-question="Which supplier gave me the cheapest Harpic?">
+                  <span>Cheapest supplier for Harpic</span><span class="ask-example__arrow" aria-hidden="true">↗</span>
+                </button>
+                <button type="button" class="ask-example" data-question="What was my average buying price for Basmati Rice over the last 9 months?">
+                  <span>Average price for Basmati Rice</span><span class="ask-example__arrow" aria-hidden="true">↗</span>
+                </button>
+                <button type="button" class="ask-example" data-question="How much rice did I buy this year?">
+                  <span>Rice bought this year</span><span class="ask-example__arrow" aria-hidden="true">↗</span>
+                </button>
+              </div>
+              <p class="ask-panel__note">Exact totals are calculated in PostgreSQL. Semantic recall uses pgvector. No arithmetic is left to the model.</p>
+            </aside>
+          </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             ANALYTICS
+             ═══════════════════════════════════════════════════════════════════ -->
+        <section class="view" data-view="analytics" aria-labelledby="analytics-title" hidden>
+          <header class="view-head view-head--compact">
+            <div class="view-head__main">
+              <p class="eyebrow"><span class="eyebrow__mark" aria-hidden="true"></span>Workspace <span class="eyebrow__sep" aria-hidden="true"></span> Analysis</p>
+              <h1 class="display" id="analytics-title">The shape of <em>spend<span class="accent">.</span></em></h1>
+              <p class="lede">Where the money goes, which suppliers carry the ledger, and how item volume moves with purchasing value.</p>
+            </div>
+            <div class="view-head__aside">
+              <p class="micro">Analysed spend</p>
+              <p class="stat-inline" id="analytics-total">—</p>
+              <p class="small muted" id="analytics-window">—</p>
+            </div>
+          </header>
+
+          <section class="ratio-strip" aria-label="Purchasing ratios">
+            <article class="ratio">
+              <p class="micro">Line items recorded</p>
+              <p class="ratio__value" id="analytics-items">—</p>
+              <p class="ratio__foot" id="analytics-items-foot">—</p>
+            </article>
+            <article class="ratio">
+              <p class="micro">Average invoice</p>
+              <p class="ratio__value" id="analytics-average-invoice">—</p>
+              <p class="ratio__foot" id="analytics-average-invoice-foot">—</p>
+            </article>
+            <article class="ratio">
+              <p class="micro">Items per invoice</p>
+              <p class="ratio__value" id="analytics-items-per-invoice">—</p>
+              <p class="ratio__foot" id="analytics-items-per-invoice-foot">—</p>
+            </article>
+            <article class="ratio">
+              <p class="micro">Lead category</p>
+              <p class="ratio__value ratio__value--serif" id="analytics-lead-category">—</p>
+              <p class="ratio__foot" id="analytics-lead-category-foot">—</p>
+            </article>
+          </section>
+
+          <div class="grid grid--7-5">
+            <section class="panel panel--donut" aria-labelledby="category-spend-title">
+              <header class="panel__head">
+                <div>
+                  <p class="micro">Composition / value</p>
+                  <h2 class="panel__title" id="category-spend-title">Spend by category</h2>
+                </div>
+                <div class="panel__stat">
+                  <span class="micro">Categories</span>
+                  <strong id="category-count">—</strong>
+                </div>
+              </header>
+              <div class="donut-layout" id="category-donut">
+                <p class="empty-copy">Loading category composition…</p>
+              </div>
+              <footer class="panel__foot">
+                <span>Share of recorded line-item value</span>
+                <span class="micro micro--right">INR · ₹</span>
+              </footer>
+            </section>
+
+            <section class="panel panel--suppliers" aria-labelledby="supplier-share-title">
+              <header class="panel__head">
+                <div>
+                  <p class="micro">Concentration / suppliers</p>
+                  <h2 class="panel__title" id="supplier-share-title">Who carries the ledger</h2>
+                </div>
+              </header>
+              <div class="rank-list" id="supplier-share">
+                <p class="empty-copy">Loading supplier concentration…</p>
+              </div>
+              <footer class="panel__foot">
+                <span id="supplier-concentration">—</span>
+                <span class="micro micro--right">By invoice value</span>
+              </footer>
+            </section>
+          </div>
+
+          <div class="grid grid--7-5">
+            <section class="panel panel--flow" aria-labelledby="flow-title">
+              <header class="panel__head">
+                <div>
+                  <p class="micro">Flow / month</p>
+                  <h2 class="panel__title" id="flow-title">Spend and volume</h2>
+                </div>
+                <div class="chart-legend" aria-hidden="true">
+                  <span><i class="legend-swatch legend-swatch--bar"></i>Spend</span>
+                  <span><i class="legend-swatch legend-swatch--line"></i>Line items</span>
+                </div>
+              </header>
+              <div class="combo-chart" id="volume-chart" role="img" aria-label="Monthly spend and line-item volume">
+                <p class="empty-copy">Loading monthly flow…</p>
+              </div>
+              <footer class="panel__foot">
+                <span id="volume-foot">—</span>
+                <span class="micro micro--right">Bars · spend / Line · items</span>
+              </footer>
+            </section>
+
+            <section class="panel panel--top-products" aria-labelledby="top-products-title">
+              <header class="panel__head">
+                <div>
+                  <p class="micro">Concentration / catalogue</p>
+                  <h2 class="panel__title" id="top-products-title">Top products by spend</h2>
+                </div>
+              </header>
+              <div class="rank-list" id="top-products">
+                <p class="empty-copy">Loading product ranking…</p>
+              </div>
+              <footer class="panel__foot">
+                <span id="top-products-foot">—</span>
+                <span class="micro micro--right">Ranked by value</span>
+              </footer>
+            </section>
+          </div>
+
+          <div class="grid grid--8-4 grid--mix">
+            <section class="panel panel--mix" aria-labelledby="mix-title">
+              <header class="panel__head">
+                <div>
+                  <p class="micro">Balance / category</p>
+                  <h2 class="panel__title" id="mix-title">Value against volume</h2>
+                </div>
+                <div class="chart-legend" aria-hidden="true">
+                  <span><i class="legend-swatch legend-swatch--spend"></i>Spend share</span>
+                  <span><i class="legend-swatch legend-swatch--items"></i>Item share</span>
+                </div>
+              </header>
+              <div class="mix-chart" id="mix-chart">
+                <p class="empty-copy">Loading category balance…</p>
+              </div>
+              <footer class="panel__foot">
+                <span>Each share is normalised independently to 100%</span>
+                <span class="micro micro--right">Spend / line items</span>
+              </footer>
+            </section>
+
+            <aside class="analysis-note" aria-labelledby="mix-note-title">
+              <p class="micro micro--light">Reading the mix</p>
+              <h2 class="analysis-note__title" id="mix-note-title">Spend concentrates. Volume <em>spreads.</em></h2>
+              <ul class="insight-list" id="mix-insights">
+                <li>Loading category insight…</li>
+              </ul>
+              <p class="analysis-note__foot">One line item is a single product entry on a supplier invoice. Spend and volume are ranked separately.</p>
+            </aside>
+          </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             INVENTORY
+             ═══════════════════════════════════════════════════════════════════ -->
+        <section class="view" data-view="inventory" aria-labelledby="inventory-title" hidden>
+          <header class="view-head view-head--compact">
+            <div class="view-head__main">
+              <p class="eyebrow"><span class="eyebrow__mark" aria-hidden="true"></span>Workspace <span class="eyebrow__sep" aria-hidden="true"></span> Catalogue</p>
+              <h1 class="display" id="inventory-title">Inventory.</h1>
+              <p class="lede">Every product purchased, its average cost, volume and last recorded invoice. Click any row to open the full price ledger.</p>
+            </div>
+            <div class="view-head__aside">
+              <p class="micro">Recorded inventory spend</p>
+              <p class="stat-inline" id="inventory-total">—</p>
+              <p class="small muted" id="inventory-count">—</p>
+            </div>
+          </header>
+
+          <div class="toolbar">
+            <div class="search-field">
+              <svg class="icon" aria-hidden="true"><use href="#i-search"></use></svg>
+              <label class="sr-only" for="inventory-search">Search inventory</label>
+              <input type="search" id="inventory-search" placeholder="Search products or categories" autocomplete="off">
+            </div>
+            <div class="filter-set" id="inventory-categories" role="group" aria-label="Filter by category"></div>
+            <div class="select-wrap">
+              <label class="sr-only" for="inventory-sort">Sort inventory</label>
+              <select id="inventory-sort" class="select">
+                <option value="spend">Sort: spend, high to low</option>
+                <option value="name">Sort: name, A to Z</option>
+                <option value="volume">Sort: volume, high to low</option>
+                <option value="recent">Sort: recently purchased</option>
+              </select>
+              <svg class="icon icon--xs select-wrap__chevron" aria-hidden="true"><use href="#i-chevron"></use></svg>
+            </div>
+          </div>
+
+          <section class="panel panel--table" aria-label="Product inventory">
+            <div class="table-wrap">
+              <table class="data-table data-table--inventory">
+                <thead>
+                  <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col">Category</th>
+                    <th scope="col" class="num">Volume</th>
+                    <th scope="col" class="num">Avg unit cost</th>
+                    <th scope="col" class="num">Total spend</th>
+                    <th scope="col" class="num">Orders</th>
+                    <th scope="col" class="num">Last purchased</th>
+                    <th scope="col"><span class="sr-only">Open</span></th>
+                  </tr>
+                </thead>
+                <tbody id="inventory-body">
+                  <tr><td colspan="8"><p class="empty-copy">Loading inventory…</p></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <footer class="panel__foot panel__foot--table">
+              <span id="inventory-result-count">—</span>
+              <span class="micro micro--right">Select a row for price history</span>
+            </footer>
+          </section>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             RECEIPTS
+             ═══════════════════════════════════════════════════════════════════ -->
+        <section class="view" data-view="receipts" aria-labelledby="receipts-title" hidden>
+          <header class="view-head view-head--compact">
+            <div class="view-head__main">
+              <p class="eyebrow"><span class="eyebrow__mark" aria-hidden="true"></span>Workspace <span class="eyebrow__sep" aria-hidden="true"></span> Archive</p>
+              <h1 class="display" id="receipts-title">Receipts.</h1>
+              <p class="lede">The complete archive of supplier documents, line-item extractions and arithmetic checks. Every figure can be traced to its source.</p>
+            </div>
+            <div class="view-head__aside">
+              <p class="micro">Filed invoices</p>
+              <p class="stat-inline" id="receipts-total">—</p>
+              <p class="small muted" id="receipts-count">—</p>
+            </div>
+          </header>
+
+          <div class="toolbar">
+            <div class="search-field">
+              <svg class="icon" aria-hidden="true"><use href="#i-search"></use></svg>
+              <label class="sr-only" for="receipts-search">Search receipts</label>
+              <input type="search" id="receipts-search" placeholder="Search supplier, invoice or ID" autocomplete="off">
+            </div>
+            <div class="select-wrap">
+              <label class="sr-only" for="receipts-month">Filter by month</label>
+              <select id="receipts-month" class="select">
+                <option value="all">All months</option>
+              </select>
+              <svg class="icon icon--xs select-wrap__chevron" aria-hidden="true"><use href="#i-chevron"></use></svg>
+            </div>
+            <button type="button" class="btn btn--ghost" id="export-receipts">
+              <svg class="icon" aria-hidden="true"><use href="#i-upload"></use></svg>
+              Export CSV
+            </button>
+          </div>
+
+          <section class="panel panel--table" aria-label="Receipt archive">
+            <div class="table-wrap">
+              <table class="data-table data-table--receipts">
+                <thead>
+                  <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Supplier</th>
+                    <th scope="col">Invoice</th>
+                    <th scope="col" class="num">Items</th>
+                    <th scope="col" class="num">Total</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"><span class="sr-only">Open</span></th>
+                  </tr>
+                </thead>
+                <tbody id="receipts-body">
+                  <tr><td colspan="7"><p class="empty-copy">Loading receipt archive…</p></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <footer class="panel__foot panel__foot--table">
+              <span id="receipts-result-count">—</span>
+              <span class="micro micro--right">Latest 100 documents</span>
+            </footer>
+          </section>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             INTELLIGENCE
+             ═══════════════════════════════════════════════════════════════════ -->
+        <section class="view" data-view="intelligence" aria-labelledby="intelligence-title" hidden>
+          <header class="view-head view-head--compact">
+            <div class="view-head__main">
+              <p class="eyebrow"><span class="eyebrow__mark" aria-hidden="true"></span>Workspace <span class="eyebrow__sep" aria-hidden="true"></span> Query engine</p>
+              <h1 class="display" id="intelligence-title">Ask the <em>ledger<span class="accent">.</span></em></h1>
+              <p class="lede">Question your purchasing history in plain language. Exact calculations run in SQL; vaguer references use semantic retrieval.</p>
+            </div>
+            <dl class="view-head__meta">
+              <div>
+                <dt>Routing</dt>
+                <dd>SQL · pgvector · hybrid</dd>
+              </div>
+              <div>
+                <dt>Source of truth</dt>
+                <dd>PostgreSQL</dd>
+              </div>
+            </dl>
+          </header>
+
+          <section class="ask-console" aria-label="Natural language query">
+            <form class="ask-form" id="ask-form">
+              <span class="ask-form__prefix">Query</span>
+              <label class="sr-only" for="ask-input">Ask a question about your purchases</label>
+              <input type="text" id="ask-input" placeholder="Which supplier gave me the cheapest Harpic?" autocomplete="off">
+              <button type="submit" class="btn btn--primary" id="ask-submit">
+                <span>Ask</span>
+                <svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg>
+              </button>
+            </form>
+
+            <div class="example-block">
+              <p class="micro">Try a question</p>
+              <div class="example-grid">
+                <button type="button" class="example-row" data-question="How much rice did I buy this year?">
+                  <span class="example-row__num">01</span>
+                  <span>How much rice did I buy this year?</span>
+                  <svg class="icon icon--xs" aria-hidden="true"><use href="#i-arrow-up"></use></svg>
+                </button>
+                <button type="button" class="example-row" data-question="Which supplier gave me the cheapest Harpic?">
+                  <span class="example-row__num">02</span>
+                  <span>Which supplier gave me the cheapest Harpic?</span>
+                  <svg class="icon icon--xs" aria-hidden="true"><use href="#i-arrow-up"></use></svg>
+                </button>
+                <button type="button" class="example-row" data-question="What was my average buying price for Basmati Rice over the last 9 months?">
+                  <span class="example-row__num">03</span>
+                  <span>Average buying price for Basmati Rice, nine months</span>
+                  <svg class="icon icon--xs" aria-hidden="true"><use href="#i-arrow-up"></use></svg>
+                </button>
+                <button type="button" class="example-row" data-question="Which supplier gave me the cheapest Amul Butter?">
+                  <span class="example-row__num">04</span>
+                  <span>Cheapest supplier for Amul Butter</span>
+                  <svg class="icon icon--xs" aria-hidden="true"><use href="#i-arrow-up"></use></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="answer" id="ask-result" hidden aria-live="polite">
+              <header class="answer__head">
+                <div class="route-tag" id="ask-route">SQL</div>
+                <div class="answer__meta">
+                  <span id="ask-time">—</span>
+                  <span class="answer__meta-sep" aria-hidden="true"></span>
+                  <span id="ask-question-echo">—</span>
+                </div>
+              </header>
+              <div class="answer__body">
+                <p class="answer__label micro">Answer</p>
+                <p class="answer__text" id="ask-answer"></p>
+                <div class="answer__receipts" id="ask-receipts"></div>
+              </div>
+              <footer class="answer__foot">
+                <span class="micro">Calculated by PostgreSQL</span>
+                <span class="micro micro--right" id="ask-route-note">Exact aggregation</span>
+              </footer>
+            </div>
+
+            <div class="method-grid" aria-label="How queries are answered">
+              <article>
+                <p class="micro">01 / SQL</p>
+                <h2>Exact arithmetic</h2>
+                <p>Totals, averages, quantities and supplier comparisons are aggregated by PostgreSQL, never by the language model.</p>
+              </article>
+              <article>
+                <p class="micro">02 / pgvector</p>
+                <h2>Semantic recall</h2>
+                <p>Descriptive references and approximate product names are matched against the receipt memory stored alongside the ledger.</p>
+              </article>
+              <article>
+                <p class="micro">03 / Hybrid</p>
+                <h2>Both, when needed</h2>
+                <p>Find matching invoices semantically, then compute exact figures over the resulting records. The cheapest reliable tool wins.</p>
+              </article>
+            </div>
+          </section>
+        </section>
+      </main>
+
+      <footer class="app-footer">
+        <p>Receipt Intelligence — a verified purchasing record for independent retailers.</p>
+        <p>Vision extraction once. PostgreSQL as the source of truth. Queries kept cheap.</p>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       SCAN DIALOG
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <dialog class="dialog dialog--scan" id="scan-dialog" aria-labelledby="scan-title">
+    <header class="dialog__head">
+      <div>
+        <p class="micro">Ingestion <span class="micro-sep">/</span> New document</p>
+        <h2 class="dialog__title" id="scan-title">Scan a receipt<span class="accent">.</span></h2>
+      </div>
+      <button type="button" class="icon-btn dialog__close" data-close="scan-dialog" aria-label="Close scan dialog">
+        <svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg>
+      </button>
+    </header>
+
+    <div class="scan-layout">
+      <aside class="scan-aside">
+        <p class="scan-aside__intro">Upload a printed, handwritten or photographed supplier invoice. The document is classified before any line item is extracted.</p>
+        <dl class="scan-specs">
+          <div><dt>Accepted</dt><dd>JPEG · PNG · WebP · HEIC</dd></div>
+          <div><dt>Limit</dt><dd>10 MB per file</dd></div>
+          <div><dt>Extraction</dt><dd>Supplier, date, invoice, every line item</dd></div>
+          <div><dt>Checks</dt><dd>Line arithmetic, totals, product identity</dd></div>
+        </dl>
+
+        <div class="mode-block">
+          <p class="micro">Handling</p>
+          <div class="mode-switch" role="group" aria-label="Saving mode">
+            <button type="button" class="mode-switch__btn is-active" data-scan-mode="persist">
+              Save to ledger
+            </button>
+            <button type="button" class="mode-switch__btn" data-scan-mode="preview">
+              Preview only
+            </button>
+          </div>
+          <p class="mode-note" id="mode-note">Persists the verified receipt and its line items to PostgreSQL.</p>
+        </div>
+
+        <p class="scan-aside__foot">One document or a batch. Rejected images never reach the extraction model.</p>
+      </aside>
+
+      <div class="scan-main">
+        <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Upload receipt images">
+          <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/heic" multiple hidden>
+          <span class="dropzone__mark" aria-hidden="true">+</span>
+          <p class="dropzone__title">Drop invoices here</p>
+          <p class="dropzone__hint">or click to browse · multiple files supported</p>
+          <div class="dropzone__samples">
+            <button type="button" class="text-button" id="sample-receipt">Try a sample invoice</button>
+            <span aria-hidden="true">·</span>
+            <button type="button" class="text-button" id="sample-rejection">Try a non-receipt</button>
+          </div>
+        </div>
+
+        <div class="scan-staged" id="scan-staged" hidden>
+          <div class="scan-staged__head">
+            <p class="micro">Ready to process</p>
+            <div class="scan-staged__tools">
+              <p class="micro micro--right" id="staged-count">0 files</p>
+              <button type="button" class="text-button" id="scan-add-files">Add files</button>
+            </div>
+          </div>
+          <ul class="staged-list" id="staged-list"></ul>
+          <div class="scan-actions">
+            <button type="button" class="btn btn--ghost" id="scan-clear">Clear</button>
+            <button type="button" class="btn btn--primary" id="scan-process">
+              <svg class="icon" aria-hidden="true"><use href="#i-upload"></use></svg>
+              <span id="scan-process-label">Process document</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="scan-progress" id="scan-progress" hidden>
+          <div class="scan-progress__head">
+            <div>
+              <p class="micro">Reading document</p>
+              <p class="scan-progress__status" id="scan-progress-status">Sending image to the classifier…</p>
+            </div>
+            <p class="scan-progress__timer" id="scan-timer">0.0s</p>
+          </div>
+          <div class="progress-line" aria-hidden="true"><span></span></div>
+          <ol class="pipeline">
+            <li data-step="image"><span>01</span>Image validation</li>
+            <li data-step="classify"><span>02</span>Receipt classification</li>
+            <li data-step="extract"><span>03</span>Line-item extraction</li>
+            <li data-step="validate"><span>04</span>Arithmetic checks</li>
+            <li data-step="resolve"><span>05</span>Product resolution</li>
+          </ol>
+        </div>
+
+        <div class="scan-result" id="scan-result" hidden>
+          <div class="scan-result__head">
+            <div>
+              <p class="micro">Document accepted</p>
+              <h3 class="scan-result__title" id="scan-result-supplier">Supplier</h3>
+              <p class="scan-result__meta" id="scan-result-meta">—</p>
+            </div>
+            <div class="scan-result__total">
+              <span class="micro">Invoice total</span>
+              <strong id="scan-result-total">—</strong>
+            </div>
+          </div>
+          <dl class="result-facts" id="scan-result-facts"></dl>
+          <div class="scan-result__actions">
+            <button type="button" class="btn btn--ghost" id="scan-another">Scan another</button>
+            <button type="button" class="btn btn--primary" id="scan-view-receipt">View receipt</button>
+          </div>
+        </div>
+
+        <div class="scan-batch" id="scan-batch-result" hidden>
+          <div class="scan-batch__head">
+            <div>
+              <p class="micro">Batch complete</p>
+              <h3 class="scan-result__title" id="batch-title">Documents filed</h3>
+              <p class="scan-result__meta" id="batch-meta">—</p>
+            </div>
+            <div class="scan-result__total">
+              <span class="micro">Batch spend</span>
+              <strong id="batch-total">—</strong>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table data-table--compact">
+              <thead>
+                <tr>
+                  <th scope="col">File</th>
+                  <th scope="col">Supplier</th>
+                  <th scope="col" class="num">Items</th>
+                  <th scope="col" class="num">Total</th>
+                  <th scope="col">Status</th>
+                  <th scope="col"><span class="sr-only">Inspect</span></th>
+                </tr>
+              </thead>
+              <tbody id="scan-batch-body"></tbody>
+            </table>
+          </div>
+          <div class="scan-actions">
+            <button type="button" class="btn btn--ghost" id="batch-scan-another">Scan another batch</button>
+            <button type="button" class="btn btn--primary" id="batch-done">Done</button>
+          </div>
+        </div>
+
+        <div class="scan-error" id="scan-error" hidden role="alert">
+          <svg class="icon scan-error__icon" aria-hidden="true"><use href="#i-alert"></use></svg>
+          <div>
+            <p class="scan-error__title" id="scan-error-title">Document not accepted</p>
+            <p class="scan-error__copy" id="scan-error-copy">—</p>
+          </div>
+          <button type="button" class="btn btn--ghost" id="scan-error-retry">Choose another</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       RECEIPT DRAWER
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <dialog class="drawer" id="receipt-dialog" aria-labelledby="receipt-dialog-label">
+    <div class="drawer__bar">
+      <p class="micro" id="receipt-dialog-label">Receipt detail</p>
+      <button type="button" class="icon-btn" data-close="receipt-dialog" aria-label="Close receipt detail">
+        <svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg>
+      </button>
+    </div>
+    <div class="drawer__body" id="receipt-content"></div>
+  </dialog>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       PRODUCT DRAWER
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <dialog class="drawer" id="product-dialog" aria-labelledby="product-dialog-label">
+    <div class="drawer__bar">
+      <p class="micro" id="product-dialog-label">Product ledger</p>
+      <button type="button" class="icon-btn" data-close="product-dialog" aria-label="Close product ledger">
+        <svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg>
+      </button>
+    </div>
+    <div class="drawer__body" id="product-content"></div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="app.js?v=20261110g"></script>
+</body>
+</html>

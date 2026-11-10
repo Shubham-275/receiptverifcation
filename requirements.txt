@@ -1,0 +1,39 @@
+# ── Web framework ─────────────────────────────────────────────────────────────
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+python-multipart>=0.0.9          # file uploads
+
+# ── Database ──────────────────────────────────────────────────────────────────
+sqlalchemy[asyncio]>=2.0.36
+asyncpg>=0.30.0                  # async PostgreSQL driver
+psycopg2-binary>=2.9.10          # sync driver for Alembic migrations
+alembic>=1.14.0                  # schema migrations
+pgvector>=0.3.6                  # pgvector Python client
+
+# ── Config & validation ───────────────────────────────────────────────────────
+pydantic>=2.10.0
+pydantic-settings>=2.7.0
+python-dotenv>=1.0.0
+
+# ── AI / Vision ───────────────────────────────────────────────────────────────
+google-genai>=2.0.0               # Gemini Vision for receipt classification + extraction
+
+# ── Image handling ────────────────────────────────────────────────────────────
+Pillow>=11.0.0
+
+# ── Product matching ──────────────────────────────────────────────────────────
+rapidfuzz>=3.10.0                # fuzzy string matching for product resolution
+
+# ── Logging ───────────────────────────────────────────────────────────────────
+structlog>=24.4.0
+
+# ── HTTP client (for internal calls & testing) ───────────────────────────────
+httpx>=0.28.0
+
+# ── Discord (Phase 12 — add bot adapter later) ───────────────────────────────
+discord.py>=2.4.0
+
+# ── Testing ───────────────────────────────────────────────────────────────────
+pytest>=8.3.0
+pytest-asyncio>=0.24.0
+pytest-httpx>=0.34.0
